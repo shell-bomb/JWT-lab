@@ -14,22 +14,25 @@ JWT tokens are simple base64 encoded with specific notation.
 
 1. Header
 
-![[Pasted image 20221201121815.png]]
-	As we can see all JWT tokens start with ´ey...´. in the left side we observe the overall structure of JWT tokens.
-	In the right side there is the structure of JWT in [JWT Online](https://jwt.io/) . The header contains metadata about the token itself (the algorithm of the cipher and its type),  and later we are going to discuss the `alg` and `typ`  section.
-	The  `alg` section specifies the type of algorithm used to sign the token, in JWT we have 2 basic types of signing algorithms.
+![](https://github.com/shell-bomb/JWT-test/blob/main/Pasted%20image%2020221201121815.png)
+
+As we can see all JWT tokens start with ´ey...´. in the left side we observe the overall structure of JWT tokens.
+In the right side there is the structure of JWT in [JWT Online](https://jwt.io/) . The header contains metadata about the token itself (the algorithm of the cipher and its type),  and later we are going to discuss the `alg` and `typ`  section.
+The  `alg` section specifies the type of algorithm used to sign the token, in JWT we have 2 basic types of signing algorithms.
 	1. HS256: the token was signed symetrically
 	2. RS256: the token was signed  asymetrically
 	
  	
 2. Payload
 
-![[Pasted image 20221201125618.png]]
+![](https://github.com/shell-bomb/JWT-test/blob/main/Pasted%20image%2020221201125618.png)
+
 The second part of the token is the payload, in the right side there are some basic values. ATTENTION (the values of the payload section may depends on the requested data of the aplication). Anyone who has a pair of hands can modify de code of the toke however is not easy at all, JWT implements security measures to control this tokens, but sometimes some security controls are not implemented correctly AND WE KNOW THAT, THAT IS WHY WE ARE HERE, TO LEARN THIS!!.
 
 3. Signature
 
-![[Pasted image 20221201130829.png]]
+![](https://github.com/shell-bomb/JWT-test/blob/main/Pasted%20image%2020221201130829.png)
+
 The last part of the token is the signature. The signature is here for a reason, the proccess to sign a token is easy.
 	1. The token generate the signature by hashing the header and payload.
 This procces involves a secret signing key, this key is stored in th back-end, it's very usefull because this method verify that none of the data was tampered since it was used.
@@ -74,34 +77,52 @@ NOTE: For this exercises I'm using burpsuite professional, although it's not nec
 
 Link to exercice [EJ1](https://portswigger.net/web-security/jwt/lab-jwt-authentication-bypass-via-unverified-signature) 
 
-In this exercice we need to bypass the unverified signature nd delete the user carlos, 
-![[Pasted image 20221202192236.png]]
+In this exercice we need to bypass the unverified signature nd delete the user carlos.
+![Pasted image 20221202192236.png](https://github.com/shell-bomb/JWT-test/blob/main/Pasted%20image%2020221202192236.png)
 
 First we need to login, it's obvious because if we aren't logged on there's no JWT.
-![[Pasted image 20221202192650.png]]
+![Pasted image 20221202192650.png](https://github.com/shell-bomb/JWT-test/blob/main/Pasted%20image%2020221202192650.png)
 
 After we logged as wiener:peter we need to gain access to the admin panel located in /admin, then  change de URL
-![[Pasted image 20221202193055.png]]
+
+![Pasted image 20221202193055.png](https://github.com/shell-bomb/JWT-test/blob/main/Pasted%20image%2020221202193055.png)
+
 to
-![[Pasted image 20221202193118.png]]
+
+![Pasted image 20221202193118.png](https://github.com/shell-bomb/JWT-test/blob/main/Pasted%20image%2020221202193118.png)
+
 And send it into the repeater.
 Unfortunately we don't have the neccesary permissions to do that.
-![[Pasted image 20221202193417.png]]
+
+![Pasted image 20221202193417.png](https://github.com/shell-bomb/JWT-test/blob/main/Pasted%20image%2020221202193417.png)
+
 However we have a capable user to do that: Administrator
-![[Pasted image 20221202193440.png]]
+
+![Pasted image 20221202193440.png](https://github.com/shell-bomb/JWT-test/blob/main/Pasted%20image%2020221202193440.png)
 
 We need to be administrator to do that but how? easy.
 Changing the username in our JWT token
 The process is simple, just select the payload section and change the username, EASY AT ALL
-![[Pasted image 20221202194200.png]]
+
+![Pasted image 20221202194200.png](https://github.com/shell-bomb/JWT-test/blob/main/Pasted%20image%2020221202194200.png)
+
 Proceed to change the username:
-![[Pasted image 20221202194428.png]]
+
+![Pasted image 20221202194428.png](https://github.com/shell-bomb/JWT-test/blob/main/Pasted%20image%2020221202194428.png)
+
 The next step in our conquest it's simple, acces the admin panel and search methods to delete the dammed user called CARLOS.
 
+
 After changing the token we see this interface:
-![[Pasted image 20221202194558.png]]
+
+![Pasted image 20221202194558.png](https://github.com/shell-bomb/JWT-test/blob/main/Pasted%20image%2020221202194558.png)
+
 AND now the glorious moment
-![[b9bc887c-d36d-44eb-a030-623e3eba8036_text.gif]]
+
+![b9bc887c-d36d-44eb-a030-623e3eba8036_text.gif](https://github.com/shell-bomb/JWT-test/blob/main/b9bc887c-d36d-44eb-a030-623e3eba8036_text.gif)
+
 Delete the user carlos BUT PREVIOUSLY, we need to change the token AGAIN!!! (oh jeez)
-![[Pasted image 20221202194947.png]]
+
+![Pasted image 20221202194947.png](https://github.com/shell-bomb/JWT-test/blob/main/Pasted%20image%2020221202194947.png)
+
 Lab completeee.
